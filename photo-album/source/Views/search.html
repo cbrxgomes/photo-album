@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a id="btn-add" href="book/create" class="btn btn-success" title="Adicionar livro">
+        <svg width="26" height="26" fill="#ffffff" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+        </svg>
+    </a>
+
+    <div>
+        <input type="text" id="books-search" class="form-control m-auto mb-5" placeholder="Pesquise um livro aqui">
+    </div>
+
+    {% if books %}
+        <div id="gallery" class="d-flex">
+            {% for book in books %}
+                <a href="book/{{ book.BookId }}" class="book d-flex flex-column">
+                    <div class="book-image">
+                        <img src="/paper-online-library/source/wwwroot/img/book/{{ book.BookId }}.jpg">
+                    </div>
+                    <div class="book-name">
+                        {{ book.Name }}
+                    </div>
+                    <div class="book-author">
+                        por {{ book.AuthorName }}
+                    </div>
+                    <div class="book-description">
+                        {{ book.Description }}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

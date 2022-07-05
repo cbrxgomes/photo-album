@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% set IsAdd = "create" in route %}
+
+<form method="post" enctype="multipart/form-data">
+    <div id="book-view">
+        <h2 id="book-view-name" class="mb-5">
+            {% if IsAdd %}
+                Adicionar Livro
+            {% else %}
+                {{ book.Name }}
+            {% endif %}
+        </h2>
+
+        <div id="book-view-content" class="d-flex">
+            {% if not IsAdd %}
+                <div id="book-view-image" class="me-5">
+                    <img id="book-image-large" src="/paper-online-library/source/wwwroot/img/book/{{ book.BookId }}.jpg" width="250px">
+                </div>
+            {% endif %}
+            <div id="book-view-details" class="row g-4">
+                <div class="col-sm-6">
+                    <label for="author" class="form-label">Autor</label>
+                    <select id="author" class="form-select" name="author" required>
+                        <option value=""></option>
+        
+                        {% for author in authors %}
+                            <option value="{{ author.AuthorId }}"{{book.AuthorId == author.AuthorId ? " selected" : ""}}>{{ author.Name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="publishing-company" class="form-label">Editora</label>
+                    <select id="publishing-company" class="form-select" name="publishingCompany" required>
+                        <option value=""></option>
+        
+                        {% for company in publishingCompany %}
+                            <option value="{{ company.PublishingCompanyId }}"{{book.PublishingCompanyId == company.PublishingCompanyId ? " selected" : ""}}>{{ company.Name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" id="name" class="form-control" name="name" value="{{book.Name}}" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="publication" class="form-label">Data da publicação</label>
+                    <input type="date" id="publication" class="form-control" name="publication" value="{{book.Publication}}" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="edition" class="form-label">Edição</label>
+                    <input type="number" id="edition" min="1" class="form-control" name="edition" value="{{book.Edition}}" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="number-pages" class="form-label">Número de páginas</label>
+                    <input type="number" id="number-pages" min="1" class="form-control" name="numberPages" value="{{book.NumberPages}}" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="cover-type" class="form-label">Tipo da capa</label>
+                    <select id="cover-type" class="form-select" name="coverType" required>
+                        <option value=""></option>
+        
+                        {% for type in coverTypes %}
+                            <option value="{{ type.CoverTypeId }}"{{book.CoverTypeId == type.CoverTypeId ? " selected" : ""}}>{{ type.Name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label for="cover-image" class="form-label">Imagem da capa</label>
+                    <input class="form-control" type="file" id="cover-image" name="coverImage" accept=".jpg, .jpeg, .png" required>
+                    </div>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Descrição</label>
+                    <textarea id="description" class="form-control" name="description" rows="8">{{book.Description}}</textarea>
+                </div>
+                <div class="col-sm-12">
+                    <input class="form-check-input" type="checkbox" id="is-active" name="isActive"{{ book.IsActive ? " checked" : "" }}>
+                    <label class="form-check-label" for="is-active">
+                        Este livro pode ser pesquisado
+                    </label>
+                </div>
+                <div class="col-sm-12 text-end">
+                    <a href="/paper-online-library/" class="btn btn-secondary me-1">Voltar</a>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
